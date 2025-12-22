@@ -43,3 +43,12 @@ jobs:
       - name: Build de l'image Docker
         run: |
           docker build -t mon-app-devops:${{ github.sha }} .
+      
+  deploy:
+    needs: build-docker
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render Deployment
+        run: |
+          curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
