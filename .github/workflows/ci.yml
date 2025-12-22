@@ -10,17 +10,22 @@ jobs:
   check-quality:
     runs-on: ubuntu-latest 
 
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v4
 
-      - name: Installer Node.js
+      - name: Installer Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: Installer les dépendances
-        run: npm install
+        run: npm ci
 
       - name: Lancer les Tests Unitaires
         run: npm test
