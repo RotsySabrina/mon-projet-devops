@@ -8,4 +8,4 @@ RUN npm ci --only=production
 
 COPY . .
 
-CMD ["npm", "test"]
+CMD ["npm", "src/calcul.js"]
